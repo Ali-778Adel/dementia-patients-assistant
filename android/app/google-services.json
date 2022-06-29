@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "122882350555",
+    "project_id": "mission-man",
+    "storage_bucket": "mission-man.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:122882350555:android:aaf421e32e7526b8c19bfe",
+        "android_client_info": {
+          "package_name": "com.example.untitled"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "122882350555-l4fm24dlqt45ij8afcn077fghc7qccv7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuPA9v2KSijP5_2zXifPlxswKlb09aHNE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "122882350555-l4fm24dlqt45ij8afcn077fghc7qccv7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
