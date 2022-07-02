@@ -7,6 +7,7 @@ import 'package:untitled/ui-widgets/custom-app-bar.dart';
 import 'package:untitled/ui-widgets/home-gridniew-item.dart';
 
 import '../ui-widgets/custom-darwer.dart';
+import 'homelayout-sub-screens/face-recog-screen.dart';
 import 'homelayout-sub-screens/your-network-screen.dart';
 
 
@@ -33,7 +34,7 @@ class HomeScreenDemo extends StatelessWidget {
          GridviewItem(imagePath: 'assets/home-screen-images/weekdaysScheduling.png',widgetText: 'shcdule your weekdays',onItemTapped: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=> WeekdaysMissionScreen()))),
          GridviewItem(imagePath: 'assets/home-screen-images/networkContacts.png',widgetText: 'your communications',onItemTapped: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=> UserNetworkScreen()))),
          GridviewItem(imagePath: 'assets/home-screen-images/whereIAm.png',widgetText: 'where i am now',onItemTapped: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=> GoogleMapsScreen()))),
-         GridviewItem(imagePath: 'assets/home-screen-images/faceRecognition.png',widgetText:'who is this? ',onItemTapped: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>const Scaffold()))),
+         GridviewItem(imagePath: 'assets/home-screen-images/faceRecognition.png',widgetText:'who is this? ',onItemTapped: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>const FaceRecogScreen()))),
        ],
         ),
     );

@@ -6,7 +6,7 @@ buildscript {
         appCompatVersion    = "1.4.1"
         playServicesLocationVersion = "19.0.1"
         removeBackgroundGeolocationDebugSoundsInRelease = false// or latest
-          }
+    }
     repositories {
         google()
         mavenCentral()
@@ -15,7 +15,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
-        classpath 'com.google.gms:google-services:4.3.12'
+        classpath 'com.google.gms:google-services:4.3.8'
     }
 }
 
@@ -24,8 +24,8 @@ allprojects {
         google()
         mavenCentral()
         maven {
-        url "${project(':background_fetch').projectDir}/libs"
-         }
+            url "${project(':background_fetch').projectDir}/libs"
+        }
         maven {
             url "${project(':flutter_background_geolocation').projectDir}/libs"
         }

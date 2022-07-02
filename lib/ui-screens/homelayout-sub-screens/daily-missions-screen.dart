@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:untitled/bloc/daily-mission-bloc/daily-missions-cubit.dart';
 import 'package:untitled/bloc/daily-mission-bloc/daily-missions-states.dart';
