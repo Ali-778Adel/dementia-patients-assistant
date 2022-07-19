@@ -47,9 +47,39 @@ const SqfEntityTable tableWeekdaysMissions = SqfEntityTable(
 
   ],
 );
+
+
+const SqfEntityTable tableFaceData=SqfEntityTable(
+  tableName: 'faceDataTable',
+  primaryKeyName: 'id',
+  useSoftDeleting: true,
+  primaryKeyType: PrimaryKeyType.integer_auto_incremental,
+  fields: [
+    SqfEntityField('facePoints', DbType.text),
+    SqfEntityField('leftEyebrowTop', DbType.text),
+    SqfEntityField('leftEyebrowBottom', DbType.text),
+    SqfEntityField('rightEyebrowTop', DbType.text),
+    SqfEntityField('rightEyebrowBottom', DbType.text),
+    SqfEntityField('leftEye', DbType.text),
+    SqfEntityField('rightEye', DbType.text),
+    SqfEntityField('upperLipTop', DbType.text),
+    SqfEntityField('lowerLipTop', DbType.text),
+    SqfEntityField('noseBridge', DbType.text),
+    SqfEntityField('noseBottom', DbType.text),
+    SqfEntityField('leftCheek', DbType.text),
+    SqfEntityField('rightCheek', DbType.text),
+    SqfEntityField('userName', DbType.text),
+    SqfEntityField('userRelation ', DbType.text),
+    SqfEntityField('completed', DbType.bool, defaultValue: false),
+  ]
+);
+
+
 const seqIdentity = SqfEntitySequence(
   sequenceName: 'identity',
 );
+
+
 
 
 // This is where we define our database:
@@ -62,6 +92,8 @@ const myDbModel = SqfEntityModel(
     ],
     databaseTables: [
       tableRepeatableMissions,
-      tableWeekdaysMissions
+      tableWeekdaysMissions,
+      tableFaceData
+
     ] //if you will be adding new tables, do not forget to put them here
     );

@@ -1,16 +1,13 @@
 
-import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:untitled/bloc/auth_cubit/auth-states.dart';
 import 'package:untitled/models/user-model.dart';
-import 'package:untitled/ui-screens/hom-layout.dart';
 import 'package:untitled/ui-screens/home-screen-demo.dart';
 
 class AuthCubit extends Cubit<AuthStates>{

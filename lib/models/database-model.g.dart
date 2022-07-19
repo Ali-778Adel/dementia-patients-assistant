@@ -85,6 +85,43 @@ class TableWeekdaysMission extends SqfEntityTableBase {
     return _instance = _instance ?? TableWeekdaysMission();
   }
 }
+
+// FaceDataTable TABLE
+class TableFaceDataTable extends SqfEntityTableBase {
+  TableFaceDataTable() {
+    // declare properties of EntityTable
+    tableName = 'faceDataTable';
+    primaryKeyName = 'id';
+    primaryKeyType = PrimaryKeyType.integer_auto_incremental;
+    useSoftDeleting = true;
+    // when useSoftDeleting is true, creates a field named 'isDeleted' on the table, and set to '1' this field when item deleted (does not hard delete)
+
+    // declare fields
+    fields = [
+      SqfEntityFieldBase('facePoints', DbType.text),
+      SqfEntityFieldBase('leftEyebrowTop', DbType.text),
+      SqfEntityFieldBase('leftEyebrowBottom', DbType.text),
+      SqfEntityFieldBase('rightEyebrowTop', DbType.text),
+      SqfEntityFieldBase('rightEyebrowBottom', DbType.text),
+      SqfEntityFieldBase('leftEye', DbType.text),
+      SqfEntityFieldBase('rightEye', DbType.text),
+      SqfEntityFieldBase('upperLipTop', DbType.text),
+      SqfEntityFieldBase('lowerLipTop', DbType.text),
+      SqfEntityFieldBase('noseBridge', DbType.text),
+      SqfEntityFieldBase('noseBottom', DbType.text),
+      SqfEntityFieldBase('leftCheek', DbType.text),
+      SqfEntityFieldBase('rightCheek', DbType.text),
+      SqfEntityFieldBase('userName', DbType.text),
+      SqfEntityFieldBase('userRelation ', DbType.text),
+      SqfEntityFieldBase('completed', DbType.bool, defaultValue: false),
+    ];
+    super.init();
+  }
+  static SqfEntityTableBase? _instance;
+  static SqfEntityTableBase get getInstance {
+    return _instance = _instance ?? TableFaceDataTable();
+  }
+}
 // END TABLES
 
 // BEGIN SEQUENCES
@@ -118,6 +155,7 @@ class MyAppDatabaseModel extends SqfEntityModelProvider {
     databaseTables = [
       TableRepeatableMissionsTable.getInstance,
       TableWeekdaysMission.getInstance,
+      TableFaceDataTable.getInstance,
     ];
 
     sequences = [
@@ -2435,6 +2473,1252 @@ class WeekdaysMissionManager extends SqfEntityProvider {
 }
 
 //endregion WeekdaysMissionManager
+// region FaceDataTable
+class FaceDataTable extends TableBase {
+  FaceDataTable(
+      {this.id,
+      this.facePoints,
+      this.leftEyebrowTop,
+      this.leftEyebrowBottom,
+      this.rightEyebrowTop,
+      this.rightEyebrowBottom,
+      this.leftEye,
+      this.rightEye,
+      this.upperLipTop,
+      this.lowerLipTop,
+      this.noseBridge,
+      this.noseBottom,
+      this.leftCheek,
+      this.rightCheek,
+      this.userName,
+      this.userRelation,
+      this.completed,
+      this.isDeleted}) {
+    _setDefaultValues();
+    softDeleteActivated = true;
+  }
+  FaceDataTable.withFields(
+      this.facePoints,
+      this.leftEyebrowTop,
+      this.leftEyebrowBottom,
+      this.rightEyebrowTop,
+      this.rightEyebrowBottom,
+      this.leftEye,
+      this.rightEye,
+      this.upperLipTop,
+      this.lowerLipTop,
+      this.noseBridge,
+      this.noseBottom,
+      this.leftCheek,
+      this.rightCheek,
+      this.userName,
+      this.userRelation,
+      this.completed,
+      this.isDeleted) {
+    _setDefaultValues();
+  }
+  FaceDataTable.withId(
+      this.id,
+      this.facePoints,
+      this.leftEyebrowTop,
+      this.leftEyebrowBottom,
+      this.rightEyebrowTop,
+      this.rightEyebrowBottom,
+      this.leftEye,
+      this.rightEye,
+      this.upperLipTop,
+      this.lowerLipTop,
+      this.noseBridge,
+      this.noseBottom,
+      this.leftCheek,
+      this.rightCheek,
+      this.userName,
+      this.userRelation,
+      this.completed,
+      this.isDeleted) {
+    _setDefaultValues();
+  }
+  // fromMap v2.0
+  FaceDataTable.fromMap(Map<String, dynamic> o,
+      {bool setDefaultValues = true}) {
+    if (setDefaultValues) {
+      _setDefaultValues();
+    }
+    id = int.tryParse(o['id'].toString());
+    if (o['facePoints'] != null) {
+      facePoints = o['facePoints'].toString();
+    }
+    if (o['leftEyebrowTop'] != null) {
+      leftEyebrowTop = o['leftEyebrowTop'].toString();
+    }
+    if (o['leftEyebrowBottom'] != null) {
+      leftEyebrowBottom = o['leftEyebrowBottom'].toString();
+    }
+    if (o['rightEyebrowTop'] != null) {
+      rightEyebrowTop = o['rightEyebrowTop'].toString();
+    }
+    if (o['rightEyebrowBottom'] != null) {
+      rightEyebrowBottom = o['rightEyebrowBottom'].toString();
+    }
+    if (o['leftEye'] != null) {
+      leftEye = o['leftEye'].toString();
+    }
+    if (o['rightEye'] != null) {
+      rightEye = o['rightEye'].toString();
+    }
+    if (o['upperLipTop'] != null) {
+      upperLipTop = o['upperLipTop'].toString();
+    }
+    if (o['lowerLipTop'] != null) {
+      lowerLipTop = o['lowerLipTop'].toString();
+    }
+    if (o['noseBridge'] != null) {
+      noseBridge = o['noseBridge'].toString();
+    }
+    if (o['noseBottom'] != null) {
+      noseBottom = o['noseBottom'].toString();
+    }
+    if (o['leftCheek'] != null) {
+      leftCheek = o['leftCheek'].toString();
+    }
+    if (o['rightCheek'] != null) {
+      rightCheek = o['rightCheek'].toString();
+    }
+    if (o['userName'] != null) {
+      userName = o['userName'].toString();
+    }
+    if (o['userRelation '] != null) {
+      userRelation = o['userRelation '].toString();
+    }
+    if (o['completed'] != null) {
+      completed = o['completed'].toString() == '1' ||
+          o['completed'].toString() == 'true';
+    }
+    isDeleted = o['isDeleted'] != null
+        ? o['isDeleted'] == 1 || o['isDeleted'] == true
+        : null;
+  }
+  // FIELDS (FaceDataTable)
+  int? id;
+  String? facePoints;
+  String? leftEyebrowTop;
+  String? leftEyebrowBottom;
+  String? rightEyebrowTop;
+  String? rightEyebrowBottom;
+  String? leftEye;
+  String? rightEye;
+  String? upperLipTop;
+  String? lowerLipTop;
+  String? noseBridge;
+  String? noseBottom;
+  String? leftCheek;
+  String? rightCheek;
+  String? userName;
+  String? userRelation;
+  bool? completed;
+  bool? isDeleted;
+
+  // end FIELDS (FaceDataTable)
+
+  static const bool _softDeleteActivated = true;
+  FaceDataTableManager? __mnFaceDataTable;
+
+  FaceDataTableManager get _mnFaceDataTable {
+    return __mnFaceDataTable = __mnFaceDataTable ?? FaceDataTableManager();
+  }
+
+  // METHODS
+  @override
+  Map<String, dynamic> toMap(
+      {bool forQuery = false, bool forJson = false, bool forView = false}) {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    if (facePoints != null || !forView) {
+      map['facePoints'] = facePoints;
+    }
+    if (leftEyebrowTop != null || !forView) {
+      map['leftEyebrowTop'] = leftEyebrowTop;
+    }
+    if (leftEyebrowBottom != null || !forView) {
+      map['leftEyebrowBottom'] = leftEyebrowBottom;
+    }
+    if (rightEyebrowTop != null || !forView) {
+      map['rightEyebrowTop'] = rightEyebrowTop;
+    }
+    if (rightEyebrowBottom != null || !forView) {
+      map['rightEyebrowBottom'] = rightEyebrowBottom;
+    }
+    if (leftEye != null || !forView) {
+      map['leftEye'] = leftEye;
+    }
+    if (rightEye != null || !forView) {
+      map['rightEye'] = rightEye;
+    }
+    if (upperLipTop != null || !forView) {
+      map['upperLipTop'] = upperLipTop;
+    }
+    if (lowerLipTop != null || !forView) {
+      map['lowerLipTop'] = lowerLipTop;
+    }
+    if (noseBridge != null || !forView) {
+      map['noseBridge'] = noseBridge;
+    }
+    if (noseBottom != null || !forView) {
+      map['noseBottom'] = noseBottom;
+    }
+    if (leftCheek != null || !forView) {
+      map['leftCheek'] = leftCheek;
+    }
+    if (rightCheek != null || !forView) {
+      map['rightCheek'] = rightCheek;
+    }
+    if (userName != null || !forView) {
+      map['userName'] = userName;
+    }
+    if (userRelation != null || !forView) {
+      map['userRelation '] = userRelation;
+    }
+    if (completed != null) {
+      map['completed'] = forQuery ? (completed! ? 1 : 0) : completed;
+    } else if (completed != null || !forView) {
+      map['completed'] = null;
+    }
+    if (isDeleted != null) {
+      map['isDeleted'] = forQuery ? (isDeleted! ? 1 : 0) : isDeleted;
+    }
+
+    return map;
+  }
+
+  @override
+  Future<Map<String, dynamic>> toMapWithChildren(
+      [bool forQuery = false,
+      bool forJson = false,
+      bool forView = false]) async {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    if (facePoints != null || !forView) {
+      map['facePoints'] = facePoints;
+    }
+    if (leftEyebrowTop != null || !forView) {
+      map['leftEyebrowTop'] = leftEyebrowTop;
+    }
+    if (leftEyebrowBottom != null || !forView) {
+      map['leftEyebrowBottom'] = leftEyebrowBottom;
+    }
+    if (rightEyebrowTop != null || !forView) {
+      map['rightEyebrowTop'] = rightEyebrowTop;
+    }
+    if (rightEyebrowBottom != null || !forView) {
+      map['rightEyebrowBottom'] = rightEyebrowBottom;
+    }
+    if (leftEye != null || !forView) {
+      map['leftEye'] = leftEye;
+    }
+    if (rightEye != null || !forView) {
+      map['rightEye'] = rightEye;
+    }
+    if (upperLipTop != null || !forView) {
+      map['upperLipTop'] = upperLipTop;
+    }
+    if (lowerLipTop != null || !forView) {
+      map['lowerLipTop'] = lowerLipTop;
+    }
+    if (noseBridge != null || !forView) {
+      map['noseBridge'] = noseBridge;
+    }
+    if (noseBottom != null || !forView) {
+      map['noseBottom'] = noseBottom;
+    }
+    if (leftCheek != null || !forView) {
+      map['leftCheek'] = leftCheek;
+    }
+    if (rightCheek != null || !forView) {
+      map['rightCheek'] = rightCheek;
+    }
+    if (userName != null || !forView) {
+      map['userName'] = userName;
+    }
+    if (userRelation != null || !forView) {
+      map['userRelation '] = userRelation;
+    }
+    if (completed != null) {
+      map['completed'] = forQuery ? (completed! ? 1 : 0) : completed;
+    } else if (completed != null || !forView) {
+      map['completed'] = null;
+    }
+    if (isDeleted != null) {
+      map['isDeleted'] = forQuery ? (isDeleted! ? 1 : 0) : isDeleted;
+    }
+
+    return map;
+  }
+
+  /// This method returns Json String [FaceDataTable]
+  @override
+  String toJson() {
+    return json.encode(toMap(forJson: true));
+  }
+
+  /// This method returns Json String [FaceDataTable]
+  @override
+  Future<String> toJsonWithChilds() async {
+    return json.encode(await toMapWithChildren(false, true));
+  }
+
+  @override
+  List<dynamic> toArgs() {
+    return [
+      facePoints,
+      leftEyebrowTop,
+      leftEyebrowBottom,
+      rightEyebrowTop,
+      rightEyebrowBottom,
+      leftEye,
+      rightEye,
+      upperLipTop,
+      lowerLipTop,
+      noseBridge,
+      noseBottom,
+      leftCheek,
+      rightCheek,
+      userName,
+      userRelation,
+      completed,
+      isDeleted
+    ];
+  }
+
+  @override
+  List<dynamic> toArgsWithIds() {
+    return [
+      id,
+      facePoints,
+      leftEyebrowTop,
+      leftEyebrowBottom,
+      rightEyebrowTop,
+      rightEyebrowBottom,
+      leftEye,
+      rightEye,
+      upperLipTop,
+      lowerLipTop,
+      noseBridge,
+      noseBottom,
+      leftCheek,
+      rightCheek,
+      userName,
+      userRelation,
+      completed,
+      isDeleted
+    ];
+  }
+
+  static Future<List<FaceDataTable>?> fromWebUrl(Uri uri,
+      {Map<String, String>? headers}) async {
+    try {
+      final response = await http.get(uri, headers: headers);
+      return await fromJson(response.body);
+    } catch (e) {
+      debugPrint(
+          'SQFENTITY ERROR FaceDataTable.fromWebUrl: ErrorMessage: ${e.toString()}');
+      return null;
+    }
+  }
+
+  Future<http.Response> postUrl(Uri uri, {Map<String, String>? headers}) {
+    return http.post(uri, headers: headers, body: toJson());
+  }
+
+  static Future<List<FaceDataTable>> fromJson(String jsonBody) async {
+    final Iterable list = await json.decode(jsonBody) as Iterable;
+    var objList = <FaceDataTable>[];
+    try {
+      objList = list
+          .map((facedatatable) =>
+              FaceDataTable.fromMap(facedatatable as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      debugPrint(
+          'SQFENTITY ERROR FaceDataTable.fromJson: ErrorMessage: ${e.toString()}');
+    }
+    return objList;
+  }
+
+  static Future<List<FaceDataTable>> fromMapList(List<dynamic> data,
+      {bool preload = false,
+      List<String>? preloadFields,
+      bool loadParents = false,
+      List<String>? loadedFields,
+      bool setDefaultValues = true}) async {
+    final List<FaceDataTable> objList = <FaceDataTable>[];
+    loadedFields = loadedFields ?? [];
+    for (final map in data) {
+      final obj = FaceDataTable.fromMap(map as Map<String, dynamic>,
+          setDefaultValues: setDefaultValues);
+
+      objList.add(obj);
+    }
+    return objList;
+  }
+
+  /// returns FaceDataTable by ID if exist, otherwise returns null
+  /// Primary Keys: int? id
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  /// ex: getById(preload:true) -> Loads all related objects
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  /// ex: getById(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  /// <returns>returns [FaceDataTable] if exist, otherwise returns null
+  Future<FaceDataTable?> getById(int? id,
+      {bool preload = false,
+      List<String>? preloadFields,
+      bool loadParents = false,
+      List<String>? loadedFields}) async {
+    if (id == null) {
+      return null;
+    }
+    FaceDataTable? obj;
+    final data = await _mnFaceDataTable.getById([id]);
+    if (data.length != 0) {
+      obj = FaceDataTable.fromMap(data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// Saves the (FaceDataTable) object. If the id field is null, saves as a new record and returns new id, if id is not null then updates record
+  /// ignoreBatch = true as a default. Set ignoreBatch to false if you run more than one save() operation those are between batchStart and batchCommit
+  /// <returns>Returns id
+  @override
+  Future<int?> save({bool ignoreBatch = true}) async {
+    if (id == null || id == 0) {
+      id = await _mnFaceDataTable.insert(this, ignoreBatch);
+    } else {
+      await _mnFaceDataTable.update(this);
+    }
+
+    return id;
+  }
+
+  /// Saves the (FaceDataTable) object. If the id field is null, saves as a new record and returns new id, if id is not null then updates record
+  /// ignoreBatch = true as a default. Set ignoreBatch to false if you run more than one save() operation those are between batchStart and batchCommit
+  /// <returns>Returns id
+  @override
+  Future<int?> saveOrThrow({bool ignoreBatch = true}) async {
+    if (id == null || id == 0) {
+      id = await _mnFaceDataTable.insertOrThrow(this, ignoreBatch);
+
+      isInsert = true;
+    } else {
+      // id= await _upsert(); // removed in sqfentity_gen 1.3.0+6
+      await _mnFaceDataTable.updateOrThrow(this);
+    }
+
+    return id;
+  }
+
+  /// saveAs FaceDataTable. Returns a new Primary Key value of FaceDataTable
+
+  /// <returns>Returns a new Primary Key value of FaceDataTable
+  @override
+  Future<int?> saveAs({bool ignoreBatch = true}) async {
+    id = null;
+
+    return save(ignoreBatch: ignoreBatch);
+  }
+
+  /// saveAll method saves the sent List<FaceDataTable> as a bulk in one transaction
+  /// Returns a <List<BoolResult>>
+  static Future<List<dynamic>> saveAll(List<FaceDataTable> facedatatables,
+      {bool? exclusive, bool? noResult, bool? continueOnError}) async {
+    List<dynamic>? result = [];
+    // If there is no open transaction, start one
+    final isStartedBatch = await MyAppDatabaseModel().batchStart();
+    for (final obj in facedatatables) {
+      await obj.save(ignoreBatch: false);
+    }
+    if (!isStartedBatch) {
+      result = await MyAppDatabaseModel().batchCommit(
+          exclusive: exclusive,
+          noResult: noResult,
+          continueOnError: continueOnError);
+      for (int i = 0; i < facedatatables.length; i++) {
+        if (facedatatables[i].id == null) {
+          facedatatables[i].id = result![i] as int;
+        }
+      }
+    }
+    return result!;
+  }
+
+  /// Updates if the record exists, otherwise adds a new row
+  /// <returns>Returns id
+  @override
+  Future<int?> upsert({bool ignoreBatch = true}) async {
+    try {
+      final result = await _mnFaceDataTable.rawInsert(
+          'INSERT OR REPLACE INTO faceDataTable (id, facePoints, leftEyebrowTop, leftEyebrowBottom, rightEyebrowTop, rightEyebrowBottom, leftEye, rightEye, upperLipTop, lowerLipTop, noseBridge, noseBottom, leftCheek, rightCheek, userName, userRelation , completed,isDeleted)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+          [
+            id,
+            facePoints,
+            leftEyebrowTop,
+            leftEyebrowBottom,
+            rightEyebrowTop,
+            rightEyebrowBottom,
+            leftEye,
+            rightEye,
+            upperLipTop,
+            lowerLipTop,
+            noseBridge,
+            noseBottom,
+            leftCheek,
+            rightCheek,
+            userName,
+            userRelation,
+            completed,
+            isDeleted
+          ],
+          ignoreBatch);
+      if (result! > 0) {
+        saveResult = BoolResult(
+            success: true,
+            successMessage: 'FaceDataTable id=$id updated successfully');
+      } else {
+        saveResult = BoolResult(
+            success: false,
+            errorMessage: 'FaceDataTable id=$id did not update');
+      }
+      return id;
+    } catch (e) {
+      saveResult = BoolResult(
+          success: false,
+          errorMessage: 'FaceDataTable Save failed. Error: ${e.toString()}');
+      return null;
+    }
+  }
+
+  /// inserts or replaces the sent List<<FaceDataTable>> as a bulk in one transaction.
+  /// upsertAll() method is faster then saveAll() method. upsertAll() should be used when you are sure that the primary key is greater than zero
+  /// Returns a BoolCommitResult
+  @override
+  Future<BoolCommitResult> upsertAll(List<FaceDataTable> facedatatables,
+      {bool? exclusive, bool? noResult, bool? continueOnError}) async {
+    final results = await _mnFaceDataTable.rawInsertAll(
+        'INSERT OR REPLACE INTO faceDataTable (id, facePoints, leftEyebrowTop, leftEyebrowBottom, rightEyebrowTop, rightEyebrowBottom, leftEye, rightEye, upperLipTop, lowerLipTop, noseBridge, noseBottom, leftCheek, rightCheek, userName, userRelation , completed,isDeleted)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+        facedatatables,
+        exclusive: exclusive,
+        noResult: noResult,
+        continueOnError: continueOnError);
+    return results;
+  }
+
+  /// Deletes FaceDataTable
+
+  /// <returns>BoolResult res.success= true (Deleted), false (Could not be deleted)
+  @override
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    debugPrint('SQFENTITIY: delete FaceDataTable invoked (id=$id)');
+    if (!_softDeleteActivated || hardDelete || isDeleted!) {
+      return _mnFaceDataTable
+          .delete(QueryParams(whereString: 'id=?', whereArguments: [id]));
+    } else {
+      return _mnFaceDataTable.updateBatch(
+          QueryParams(whereString: 'id=?', whereArguments: [id]),
+          {'isDeleted': 1});
+    }
+  }
+
+  /// Recover FaceDataTable
+
+  /// <returns>BoolResult res.success=Recovered, not res.success=Can not recovered
+  @override
+  Future<BoolResult> recover([bool recoverChilds = true]) async {
+    debugPrint('SQFENTITIY: recover FaceDataTable invoked (id=$id)');
+    {
+      return _mnFaceDataTable.updateBatch(
+          QueryParams(whereString: 'id=?', whereArguments: [id]),
+          {'isDeleted': 0});
+    }
+  }
+
+  @override
+  FaceDataTableFilterBuilder select(
+      {List<String>? columnsToSelect, bool? getIsDeleted}) {
+    return FaceDataTableFilterBuilder(this, getIsDeleted)
+      ..qparams.selectColumns = columnsToSelect;
+  }
+
+  @override
+  FaceDataTableFilterBuilder distinct(
+      {List<String>? columnsToSelect, bool? getIsDeleted}) {
+    return FaceDataTableFilterBuilder(this, getIsDeleted)
+      ..qparams.selectColumns = columnsToSelect
+      ..qparams.distinct = true;
+  }
+
+  void _setDefaultValues() {
+    completed = completed ?? false;
+    isDeleted = isDeleted ?? false;
+  }
+
+  @override
+  void rollbackPk() {
+    if (isInsert == true) {
+      id = null;
+    }
+  }
+
+  // END METHODS
+  // BEGIN CUSTOM CODE
+  /*
+      you can define customCode property of your SqfEntityTable constant. For example:
+      const tablePerson = SqfEntityTable(
+      tableName: 'person',
+      primaryKeyName: 'id',
+      primaryKeyType: PrimaryKeyType.integer_auto_incremental,
+      fields: [
+        SqfEntityField('firstName', DbType.text),
+        SqfEntityField('lastName', DbType.text),
+      ],
+      customCode: '''
+       String fullName()
+       { 
+         return '$firstName $lastName';
+       }
+      ''');
+     */
+  // END CUSTOM CODE
+}
+// endregion facedatatable
+
+// region FaceDataTableField
+class FaceDataTableField extends FilterBase {
+  FaceDataTableField(FaceDataTableFilterBuilder facedatatableFB)
+      : super(facedatatableFB);
+
+  @override
+  FaceDataTableFilterBuilder equals(dynamic pValue) {
+    return super.equals(pValue) as FaceDataTableFilterBuilder;
+  }
+
+  @override
+  FaceDataTableFilterBuilder equalsOrNull(dynamic pValue) {
+    return super.equalsOrNull(pValue) as FaceDataTableFilterBuilder;
+  }
+
+  @override
+  FaceDataTableFilterBuilder isNull() {
+    return super.isNull() as FaceDataTableFilterBuilder;
+  }
+
+  @override
+  FaceDataTableFilterBuilder contains(dynamic pValue) {
+    return super.contains(pValue) as FaceDataTableFilterBuilder;
+  }
+
+  @override
+  FaceDataTableFilterBuilder startsWith(dynamic pValue) {
+    return super.startsWith(pValue) as FaceDataTableFilterBuilder;
+  }
+
+  @override
+  FaceDataTableFilterBuilder endsWith(dynamic pValue) {
+    return super.endsWith(pValue) as FaceDataTableFilterBuilder;
+  }
+
+  @override
+  FaceDataTableFilterBuilder between(dynamic pFirst, dynamic pLast) {
+    return super.between(pFirst, pLast) as FaceDataTableFilterBuilder;
+  }
+
+  @override
+  FaceDataTableFilterBuilder greaterThan(dynamic pValue) {
+    return super.greaterThan(pValue) as FaceDataTableFilterBuilder;
+  }
+
+  @override
+  FaceDataTableFilterBuilder lessThan(dynamic pValue) {
+    return super.lessThan(pValue) as FaceDataTableFilterBuilder;
+  }
+
+  @override
+  FaceDataTableFilterBuilder greaterThanOrEquals(dynamic pValue) {
+    return super.greaterThanOrEquals(pValue) as FaceDataTableFilterBuilder;
+  }
+
+  @override
+  FaceDataTableFilterBuilder lessThanOrEquals(dynamic pValue) {
+    return super.lessThanOrEquals(pValue) as FaceDataTableFilterBuilder;
+  }
+
+  @override
+  FaceDataTableFilterBuilder inValues(dynamic pValue) {
+    return super.inValues(pValue) as FaceDataTableFilterBuilder;
+  }
+
+  @override
+  FaceDataTableField get not {
+    return super.not as FaceDataTableField;
+  }
+}
+// endregion FaceDataTableField
+
+// region FaceDataTableFilterBuilder
+class FaceDataTableFilterBuilder extends ConjunctionBase {
+  FaceDataTableFilterBuilder(FaceDataTable obj, bool? getIsDeleted)
+      : super(obj, getIsDeleted) {
+    _mnFaceDataTable = obj._mnFaceDataTable;
+    _softDeleteActivated = obj.softDeleteActivated;
+  }
+
+  bool _softDeleteActivated = false;
+  FaceDataTableManager? _mnFaceDataTable;
+
+  /// put the sql keyword 'AND'
+  @override
+  FaceDataTableFilterBuilder get and {
+    super.and;
+    return this;
+  }
+
+  /// put the sql keyword 'OR'
+  @override
+  FaceDataTableFilterBuilder get or {
+    super.or;
+    return this;
+  }
+
+  /// open parentheses
+  @override
+  FaceDataTableFilterBuilder get startBlock {
+    super.startBlock;
+    return this;
+  }
+
+  /// String whereCriteria, write raw query without 'where' keyword. Like this: 'field1 like 'test%' and field2 = 3'
+  @override
+  FaceDataTableFilterBuilder where(String? whereCriteria,
+      {dynamic parameterValue}) {
+    super.where(whereCriteria, parameterValue: parameterValue);
+    return this;
+  }
+
+  /// page = page number,
+  /// pagesize = row(s) per page
+  @override
+  FaceDataTableFilterBuilder page(int page, int pagesize) {
+    super.page(page, pagesize);
+    return this;
+  }
+
+  /// int count = LIMIT
+  @override
+  FaceDataTableFilterBuilder top(int count) {
+    super.top(count);
+    return this;
+  }
+
+  /// close parentheses
+  @override
+  FaceDataTableFilterBuilder get endBlock {
+    super.endBlock;
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  /// Example 1: argFields='name, date'
+  /// Example 2: argFields = ['name', 'date']
+  @override
+  FaceDataTableFilterBuilder orderBy(dynamic argFields) {
+    super.orderBy(argFields);
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  /// Example 1: argFields='field1, field2'
+  /// Example 2: argFields = ['field1', 'field2']
+  @override
+  FaceDataTableFilterBuilder orderByDesc(dynamic argFields) {
+    super.orderByDesc(argFields);
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  /// Example 1: argFields='field1, field2'
+  /// Example 2: argFields = ['field1', 'field2']
+  @override
+  FaceDataTableFilterBuilder groupBy(dynamic argFields) {
+    super.groupBy(argFields);
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  /// Example 1: argFields='name, date'
+  /// Example 2: argFields = ['name', 'date']
+  @override
+  FaceDataTableFilterBuilder having(dynamic argFields) {
+    super.having(argFields);
+    return this;
+  }
+
+  FaceDataTableField _setField(
+      FaceDataTableField? field, String colName, DbType dbtype) {
+    return FaceDataTableField(this)
+      ..param = DbParameter(
+          dbType: dbtype, columnName: colName, wStartBlock: openedBlock);
+  }
+
+  FaceDataTableField? _id;
+  FaceDataTableField get id {
+    return _id = _setField(_id, 'id', DbType.integer);
+  }
+
+  FaceDataTableField? _facePoints;
+  FaceDataTableField get facePoints {
+    return _facePoints = _setField(_facePoints, 'facePoints', DbType.text);
+  }
+
+  FaceDataTableField? _leftEyebrowTop;
+  FaceDataTableField get leftEyebrowTop {
+    return _leftEyebrowTop =
+        _setField(_leftEyebrowTop, 'leftEyebrowTop', DbType.text);
+  }
+
+  FaceDataTableField? _leftEyebrowBottom;
+  FaceDataTableField get leftEyebrowBottom {
+    return _leftEyebrowBottom =
+        _setField(_leftEyebrowBottom, 'leftEyebrowBottom', DbType.text);
+  }
+
+  FaceDataTableField? _rightEyebrowTop;
+  FaceDataTableField get rightEyebrowTop {
+    return _rightEyebrowTop =
+        _setField(_rightEyebrowTop, 'rightEyebrowTop', DbType.text);
+  }
+
+  FaceDataTableField? _rightEyebrowBottom;
+  FaceDataTableField get rightEyebrowBottom {
+    return _rightEyebrowBottom =
+        _setField(_rightEyebrowBottom, 'rightEyebrowBottom', DbType.text);
+  }
+
+  FaceDataTableField? _leftEye;
+  FaceDataTableField get leftEye {
+    return _leftEye = _setField(_leftEye, 'leftEye', DbType.text);
+  }
+
+  FaceDataTableField? _rightEye;
+  FaceDataTableField get rightEye {
+    return _rightEye = _setField(_rightEye, 'rightEye', DbType.text);
+  }
+
+  FaceDataTableField? _upperLipTop;
+  FaceDataTableField get upperLipTop {
+    return _upperLipTop = _setField(_upperLipTop, 'upperLipTop', DbType.text);
+  }
+
+  FaceDataTableField? _lowerLipTop;
+  FaceDataTableField get lowerLipTop {
+    return _lowerLipTop = _setField(_lowerLipTop, 'lowerLipTop', DbType.text);
+  }
+
+  FaceDataTableField? _noseBridge;
+  FaceDataTableField get noseBridge {
+    return _noseBridge = _setField(_noseBridge, 'noseBridge', DbType.text);
+  }
+
+  FaceDataTableField? _noseBottom;
+  FaceDataTableField get noseBottom {
+    return _noseBottom = _setField(_noseBottom, 'noseBottom', DbType.text);
+  }
+
+  FaceDataTableField? _leftCheek;
+  FaceDataTableField get leftCheek {
+    return _leftCheek = _setField(_leftCheek, 'leftCheek', DbType.text);
+  }
+
+  FaceDataTableField? _rightCheek;
+  FaceDataTableField get rightCheek {
+    return _rightCheek = _setField(_rightCheek, 'rightCheek', DbType.text);
+  }
+
+  FaceDataTableField? _userName;
+  FaceDataTableField get userName {
+    return _userName = _setField(_userName, 'userName', DbType.text);
+  }
+
+  FaceDataTableField? _userRelation;
+  FaceDataTableField get userRelation {
+    return _userRelation =
+        _setField(_userRelation, 'userRelation ', DbType.text);
+  }
+
+  FaceDataTableField? _completed;
+  FaceDataTableField get completed {
+    return _completed = _setField(_completed, 'completed', DbType.bool);
+  }
+
+  FaceDataTableField? _isDeleted;
+  FaceDataTableField get isDeleted {
+    return _isDeleted = _setField(_isDeleted, 'isDeleted', DbType.bool);
+  }
+
+  /// Deletes List<FaceDataTable> bulk by query
+  ///
+  /// <returns>BoolResult res.success= true (Deleted), false (Could not be deleted)
+  @override
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    buildParameters();
+    var r = BoolResult(success: false);
+
+    if (_softDeleteActivated && !hardDelete) {
+      r = await _mnFaceDataTable!.updateBatch(qparams, {'isDeleted': 1});
+    } else {
+      r = await _mnFaceDataTable!.delete(qparams);
+    }
+    return r;
+  }
+
+  /// Recover List<FaceDataTable> bulk by query
+  @override
+  Future<BoolResult> recover() async {
+    buildParameters(getIsDeleted: true);
+    debugPrint('SQFENTITIY: recover FaceDataTable bulk invoked');
+    return _mnFaceDataTable!.updateBatch(qparams, {'isDeleted': 0});
+  }
+
+  /// using:
+  /// update({'fieldName': Value})
+  /// fieldName must be String. Value is dynamic, it can be any of the (int, bool, String.. )
+  @override
+  Future<BoolResult> update(Map<String, dynamic> values) {
+    buildParameters();
+    if (qparams.limit! > 0 || qparams.offset! > 0) {
+      qparams.whereString =
+          'id IN (SELECT id from faceDataTable ${qparams.whereString!.isNotEmpty ? 'WHERE ${qparams.whereString}' : ''}${qparams.limit! > 0 ? ' LIMIT ${qparams.limit}' : ''}${qparams.offset! > 0 ? ' OFFSET ${qparams.offset}' : ''})';
+    }
+    return _mnFaceDataTable!.updateBatch(qparams, values);
+  }
+
+  /// This method always returns [FaceDataTable] Obj if exist, otherwise returns null
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  /// ex: toSingle(preload:true) -> Loads all related objects
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  /// ex: toSingle(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  /// <returns> FaceDataTable?
+  @override
+  Future<FaceDataTable?> toSingle(
+      {bool preload = false,
+      List<String>? preloadFields,
+      bool loadParents = false,
+      List<String>? loadedFields}) async {
+    buildParameters(pSize: 1);
+    final objFuture = _mnFaceDataTable!.toList(qparams);
+    final data = await objFuture;
+    FaceDataTable? obj;
+    if (data.isNotEmpty) {
+      obj = FaceDataTable.fromMap(data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// This method always returns [FaceDataTable]
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  /// ex: toSingle(preload:true) -> Loads all related objects
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  /// ex: toSingle(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  /// <returns> FaceDataTable?
+  @override
+  Future<FaceDataTable> toSingleOrDefault(
+      {bool preload = false,
+      List<String>? preloadFields,
+      bool loadParents = false,
+      List<String>? loadedFields}) async {
+    return await toSingle(
+            preload: preload,
+            preloadFields: preloadFields,
+            loadParents: loadParents,
+            loadedFields: loadedFields) ??
+        FaceDataTable();
+  }
+
+  /// This method returns int. [FaceDataTable]
+  /// <returns>int
+  @override
+  Future<int> toCount(
+      [VoidCallback Function(int c)? facedatatableCount]) async {
+    buildParameters();
+    qparams.selectColumns = ['COUNT(1) AS CNT'];
+    final facedatatablesFuture = await _mnFaceDataTable!.toList(qparams);
+    final int count = facedatatablesFuture[0]['CNT'] as int;
+    if (facedatatableCount != null) {
+      facedatatableCount(count);
+    }
+    return count;
+  }
+
+  /// This method returns List<FaceDataTable> [FaceDataTable]
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  /// ex: toList(preload:true) -> Loads all related objects
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  /// ex: toList(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  /// <returns>List<FaceDataTable>
+  @override
+  Future<List<FaceDataTable>> toList(
+      {bool preload = false,
+      List<String>? preloadFields,
+      bool loadParents = false,
+      List<String>? loadedFields}) async {
+    final data = await toMapList();
+    final List<FaceDataTable> facedatatablesData =
+        await FaceDataTable.fromMapList(data,
+            preload: preload,
+            preloadFields: preloadFields,
+            loadParents: loadParents,
+            loadedFields: loadedFields,
+            setDefaultValues: qparams.selectColumns == null);
+    return facedatatablesData;
+  }
+
+  /// This method returns Json String [FaceDataTable]
+  @override
+  Future<String> toJson() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(o.toMap(forJson: true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns Json String. [FaceDataTable]
+  @override
+  Future<String> toJsonWithChilds() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(await o.toMapWithChildren(false, true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns List<dynamic>. [FaceDataTable]
+  /// <returns>List<dynamic>
+  @override
+  Future<List<dynamic>> toMapList() async {
+    buildParameters();
+    return await _mnFaceDataTable!.toList(qparams);
+  }
+
+  /// This method returns Primary Key List SQL and Parameters retVal = Map<String,dynamic>. [FaceDataTable]
+  /// retVal['sql'] = SQL statement string, retVal['args'] = whereArguments List<dynamic>;
+  /// <returns>List<String>
+  @override
+  Map<String, dynamic> toListPrimaryKeySQL([bool buildParams = true]) {
+    final Map<String, dynamic> _retVal = <String, dynamic>{};
+    if (buildParams) {
+      buildParameters();
+    }
+    _retVal['sql'] =
+        'SELECT `id` FROM faceDataTable WHERE ${qparams.whereString}';
+    _retVal['args'] = qparams.whereArguments;
+    return _retVal;
+  }
+
+  /// This method returns Primary Key List<int>.
+  /// <returns>List<int>
+  @override
+  Future<List<int>> toListPrimaryKey([bool buildParams = true]) async {
+    if (buildParams) {
+      buildParameters();
+    }
+    final List<int> idData = <int>[];
+    qparams.selectColumns = ['id'];
+    final idFuture = await _mnFaceDataTable!.toList(qparams);
+
+    final int count = idFuture.length;
+    for (int i = 0; i < count; i++) {
+      idData.add(idFuture[i]['id'] as int);
+    }
+    return idData;
+  }
+
+  /// Returns List<dynamic> for selected columns. Use this method for 'groupBy' with min,max,avg..  [FaceDataTable]
+  /// Sample usage: (see EXAMPLE 4.2 at https://github.com/hhtokpinar/sqfEntity#group-by)
+  @override
+  Future<List<dynamic>> toListObject() async {
+    buildParameters();
+
+    final objectFuture = _mnFaceDataTable!.toList(qparams);
+
+    final List<dynamic> objectsData = <dynamic>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i]);
+    }
+    return objectsData;
+  }
+
+  /// Returns List<String> for selected first column
+  /// Sample usage: await FaceDataTable.select(columnsToSelect: ['columnName']).toListString()
+  @override
+  Future<List<String>> toListString(
+      [VoidCallback Function(List<String> o)? listString]) async {
+    buildParameters();
+
+    final objectFuture = _mnFaceDataTable!.toList(qparams);
+
+    final List<String> objectsData = <String>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i][qparams.selectColumns![0]].toString());
+    }
+    if (listString != null) {
+      listString(objectsData);
+    }
+    return objectsData;
+  }
+}
+// endregion FaceDataTableFilterBuilder
+
+// region FaceDataTableFields
+class FaceDataTableFields {
+  static TableField? _fId;
+  static TableField get id {
+    return _fId = _fId ?? SqlSyntax.setField(_fId, 'id', DbType.integer);
+  }
+
+  static TableField? _fFacePoints;
+  static TableField get facePoints {
+    return _fFacePoints = _fFacePoints ??
+        SqlSyntax.setField(_fFacePoints, 'facePoints', DbType.text);
+  }
+
+  static TableField? _fLeftEyebrowTop;
+  static TableField get leftEyebrowTop {
+    return _fLeftEyebrowTop = _fLeftEyebrowTop ??
+        SqlSyntax.setField(_fLeftEyebrowTop, 'leftEyebrowTop', DbType.text);
+  }
+
+  static TableField? _fLeftEyebrowBottom;
+  static TableField get leftEyebrowBottom {
+    return _fLeftEyebrowBottom = _fLeftEyebrowBottom ??
+        SqlSyntax.setField(
+            _fLeftEyebrowBottom, 'leftEyebrowBottom', DbType.text);
+  }
+
+  static TableField? _fRightEyebrowTop;
+  static TableField get rightEyebrowTop {
+    return _fRightEyebrowTop = _fRightEyebrowTop ??
+        SqlSyntax.setField(_fRightEyebrowTop, 'rightEyebrowTop', DbType.text);
+  }
+
+  static TableField? _fRightEyebrowBottom;
+  static TableField get rightEyebrowBottom {
+    return _fRightEyebrowBottom = _fRightEyebrowBottom ??
+        SqlSyntax.setField(
+            _fRightEyebrowBottom, 'rightEyebrowBottom', DbType.text);
+  }
+
+  static TableField? _fLeftEye;
+  static TableField get leftEye {
+    return _fLeftEye =
+        _fLeftEye ?? SqlSyntax.setField(_fLeftEye, 'leftEye', DbType.text);
+  }
+
+  static TableField? _fRightEye;
+  static TableField get rightEye {
+    return _fRightEye =
+        _fRightEye ?? SqlSyntax.setField(_fRightEye, 'rightEye', DbType.text);
+  }
+
+  static TableField? _fUpperLipTop;
+  static TableField get upperLipTop {
+    return _fUpperLipTop = _fUpperLipTop ??
+        SqlSyntax.setField(_fUpperLipTop, 'upperLipTop', DbType.text);
+  }
+
+  static TableField? _fLowerLipTop;
+  static TableField get lowerLipTop {
+    return _fLowerLipTop = _fLowerLipTop ??
+        SqlSyntax.setField(_fLowerLipTop, 'lowerLipTop', DbType.text);
+  }
+
+  static TableField? _fNoseBridge;
+  static TableField get noseBridge {
+    return _fNoseBridge = _fNoseBridge ??
+        SqlSyntax.setField(_fNoseBridge, 'noseBridge', DbType.text);
+  }
+
+  static TableField? _fNoseBottom;
+  static TableField get noseBottom {
+    return _fNoseBottom = _fNoseBottom ??
+        SqlSyntax.setField(_fNoseBottom, 'noseBottom', DbType.text);
+  }
+
+  static TableField? _fLeftCheek;
+  static TableField get leftCheek {
+    return _fLeftCheek = _fLeftCheek ??
+        SqlSyntax.setField(_fLeftCheek, 'leftCheek', DbType.text);
+  }
+
+  static TableField? _fRightCheek;
+  static TableField get rightCheek {
+    return _fRightCheek = _fRightCheek ??
+        SqlSyntax.setField(_fRightCheek, 'rightCheek', DbType.text);
+  }
+
+  static TableField? _fUserName;
+  static TableField get userName {
+    return _fUserName =
+        _fUserName ?? SqlSyntax.setField(_fUserName, 'userName', DbType.text);
+  }
+
+  static TableField? _fUserRelation;
+  static TableField get userRelation {
+    return _fUserRelation = _fUserRelation ??
+        SqlSyntax.setField(_fUserRelation, 'userRelation ', DbType.text);
+  }
+
+  static TableField? _fCompleted;
+  static TableField get completed {
+    return _fCompleted = _fCompleted ??
+        SqlSyntax.setField(_fCompleted, 'completed', DbType.bool);
+  }
+
+  static TableField? _fIsDeleted;
+  static TableField get isDeleted {
+    return _fIsDeleted = _fIsDeleted ??
+        SqlSyntax.setField(_fIsDeleted, 'isDeleted', DbType.integer);
+  }
+}
+// endregion FaceDataTableFields
+
+//region FaceDataTableManager
+class FaceDataTableManager extends SqfEntityProvider {
+  FaceDataTableManager()
+      : super(MyAppDatabaseModel(),
+            tableName: _tableName,
+            primaryKeyList: _primaryKeyList,
+            whereStr: _whereStr);
+  static const String _tableName = 'faceDataTable';
+  static const List<String> _primaryKeyList = ['id'];
+  static const String _whereStr = 'id=?';
+}
+
+//endregion FaceDataTableManager
 /// Region SEQUENCE IdentitySequence
 class IdentitySequence {
   /// Assigns a new value when it is triggered and returns the new value

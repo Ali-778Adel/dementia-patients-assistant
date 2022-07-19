@@ -309,4 +309,22 @@ var x;
   @override
   void dispose() {
   }
+
+  //screen
+
+ int index=0;
+  onIconButtonTapped(int indx){
+   index=indx;
+   emit(ChangeLayoutState());
+
+
+  }
+
+
+
+
+
+
+
+
 }

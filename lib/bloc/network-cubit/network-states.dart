@@ -40,3 +40,6 @@ class GetFireStoreDataFailureState extends NetworkStates{}
 class GetFirebaseStreamLoadingState extends NetworkStates{}
 class GetFirebaseStreamSuccessState extends NetworkStates{}
 class GetFirebaseStreamFailureState extends NetworkStates{}
+
+
+class ChangeLayoutState extends NetworkStates{}

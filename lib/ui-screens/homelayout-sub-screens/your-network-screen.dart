@@ -1,15 +1,18 @@
 // ignore_for_file: file_names
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:untitled/bloc/network-cubit/network-cubit.dart';
 import 'package:untitled/bloc/network-cubit/network-states.dart';
 import 'package:untitled/components/neu-button.dart';
 import 'package:untitled/ui-widgets/custom-app-bar.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../bloc/auth_cubit/auth-states.dart';
 import '../../bloc/auth_cubit/auth_cubit.dart';
 import '../../bloc/daily-mission-bloc/daily-missions-cubit.dart';
@@ -19,6 +22,7 @@ import '../../bloc/google-maps-cubit/google-maps-states.dart';
 import '../../components/mission-add-notes-dialog.dart';
 import '../../components/neu-text.dart';
 import '../../components/show_modal_bottomsheet.dart';
+import '../../constants/constants.dart';
 import '../../test-package/record-cubit.dart';
 import '../../ui-widgets/cusom-network-mission-view-item.dart';
 import '../../ui-widgets/custom-darwer.dart';
@@ -87,14 +91,35 @@ class UserNetworkScreen extends StatelessWidget{
                 ),
               );              }
             else{
-              return  NetworkDataClass(networkCubit: networkCubit
-                ,dailyMissionCubit: BlocProvider.of<DailyMissionsCubit>(context),);
+              return Scaffold(
+                body: IndexedStack(
+                  children: [
+                    NetworkDataClass(networkCubit: networkCubit,dailyMissionCubit: BlocProvider.of<DailyMissionsCubit>(context))
+                    ,Friends()
+
+                  ],
+                  index: networkCubit.index,
+
+                ),
+                bottomNavigationBar: BottomNavigationBar(items:const [
+                  BottomNavigationBarItem(icon:  Icon(CupertinoIcons.home),label: ("Home"),),
+                  BottomNavigationBarItem(icon:  Icon(CupertinoIcons.person_2_alt),label: ("your companion"),),
+
+                ],
+                currentIndex: networkCubit.index,
+                onTap: (index){
+                  networkCubit.onIconButtonTapped(index);
+                },
+                ),
+              );
+
             }
           }
         }
     ),
     );
   }
+
 }
 
 
@@ -290,17 +315,7 @@ class NetworkDataClass extends StatelessWidget{
                                       dailyMissionsCubit:dailyMissionsCubit,
                                       googleMapsCubit: BlocProvider.of<GoogleMapsCubit>(context)
                                   );
-                                  // dailyMissionsCubit.insertDatabaseMissions(
-                                  //   missionRecordUri:BlocProvider.of<TestRecordCubit>(context).recordUri,
-                                  //   missionLocationName:BlocProvider.of<GoogleMapsCubit>(context).searchResultSelectedItem??'null',
-                                  //   missionLocationId: BlocProvider.of<GoogleMapsCubit>(context).selectedPlaceId??'null',
-                                  //   missionLocationLng:BlocProvider.of<GoogleMapsCubit>(context).selectedLocationStatic !=null
-                                  //       ?
-                                  //   '${BlocProvider.of<GoogleMapsCubit>(context).selectedLocationStatic!.geometry!.location!.lng!}':'null',
-                                  //   missionLocationLat:BlocProvider.of<GoogleMapsCubit>(context).selectedLocationStatic !=null
-                                  //       ?
-                                  //   '${BlocProvider.of<GoogleMapsCubit>(context).selectedLocationStatic!.geometry!.location!.lat!}':'null',
-                                  // );
+                                  
                                   BlocProvider.of<TestRecordCubit>(context).recordUri='com.example.aac';
                                   dailyMissionsCubit.disposeDailyMissionsCubit(context);
                                   BlocProvider.of<GoogleMapsCubit>(context).onDispose();
@@ -326,6 +341,133 @@ class NetworkDataClass extends StatelessWidget{
       ],
     );
   }
+}
+
+class Friends extends StatelessWidget{
+  const Friends({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<NetworkCubit,NetworkStates>(builder: (context,state){
+      return ListView(
+        physics:const BouncingScrollPhysics(),
+         shrinkWrap: true,
+        children: [
+         Container(
+           height: MediaQuery.of(context).size.height*.30,
+           width: double.infinity,
+           child: Stack(
+             fit: StackFit.expand,
+             children: [
+              const Card(
+                 color:scaffoldMainColor ,
+               ),
+               Positioned(
+                 bottom: -5,
+                   left: 100,
+                   child: CircleAvatar(
+                     radius: 100,
+                     backgroundImage: NetworkImage(
+                         FirebaseAuth.instance.currentUser!.photoURL??'',
+                   )))
+             ],
+           ),
+         ),
+          const SizedBox(height: 20,),
+          Row(
+            children: [
+             const Expanded(flex: 1, child:PublicNeumoText(text: 'Email :',color: Colors.black,size: 18,align: TextAlign.center,))
+             ,Expanded(flex: 3, child:  Center(child: PublicNeumoText(
+               text: context.read<NetworkCubit>().targetUserInfo[0]['userEmail'],
+               color: Colors.black,
+               size: 22,
+               align: TextAlign.center,
+             ),
+             ) )
+            ],
+          ),
+          const SizedBox(
+            height: 30,
+            child:  Divider(
+              indent: 12,
+              endIndent: 12,
+              color: Colors.black,
+              thickness: .1,
+            ),
+          ),
+          Row(
+            children: [
+              const Expanded(flex: 1, child:PublicNeumoText(text: 'Phone :',color: Colors.black,size: 18,align: TextAlign.center,))
+              ,Expanded(flex: 3, child:  Center(child: PublicNeumoText(
+                text: context.read<NetworkCubit>().targetUserInfo[0]['userPhone'],
+                color: Colors.black,
+                size: 22,
+                align: TextAlign.center,
+              ),
+              ) )
+            ],
+          ),
+          const SizedBox(
+            height: 30,
+            child:  Divider(
+              indent: 12,
+              endIndent: 12,
+              color: Colors.black,
+              thickness: .1,
+            ),
+          ),
+          Row(
+            children: [
+              const Expanded(flex: 1, child:PublicNeumoText(text: 'status :',color: Colors.black,size: 18,align: TextAlign.center,))
+              ,Expanded(flex: 3, child:  Center(child: PublicNeumoText(
+                text: context.read<NetworkCubit>().targetUserInfo[0]['state'],
+                color: Colors.black,
+                size: 22,
+                align: TextAlign.center,
+              ),
+              ) )
+            ],
+          ),
+          const SizedBox(
+            height: 15,
+            child:  Divider(
+              indent: 12,
+              endIndent: 12,
+              color: Colors.black,
+              thickness: .1,
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+            child:  Divider(
+              indent: 12,
+              endIndent: 12,
+              color: Colors.black,
+              thickness: .1,
+            ),
+          ),
+           Center(child: CustomNewMissionButton(
+            iconData: CupertinoIcons.location,
+            text: 'get companion Location',
+            function: ()async{
+        final url ='https://www.google.com/maps/dir/?api=1&origin=${context.read<NetworkCubit>().currentUserInfo['locationLat']},${context.read<NetworkCubit>().currentUserInfo['locationLng']}&destination=30.4318738,31.4537318&&travelmode=driving&dir_action=navigate';
+          if (await canLaunchUrl(Uri.parse(url))) {
+            await  launchUrl(Uri.parse(url));
+          } else {
+            throw 'Could not launch $url';
+          }
+
+            },
+          ),),
+
+
+
+        ],
+      );
+    });
+
+  }
+
 }
 
 YYDialog checkState({

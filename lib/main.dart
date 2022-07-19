@@ -1,6 +1,8 @@
+import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_notification_scheduler/firebase_notification_scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:untitled/bloc/auth_cubit/auth_cubit.dart';
@@ -10,14 +12,18 @@ import 'package:untitled/bloc/home-page-bloc/test_cubit.dart';
 import 'package:untitled/bloc/home-page-bloc/weekdays-missions-cubit.dart';
 import 'package:untitled/bloc/mission-category-bloc/mission-category-cubit.dart';
 import 'package:untitled/bloc/network-cubit/network-cubit.dart';
+import 'package:untitled/face-detection/camera-view.dart';
 import 'package:untitled/services/background-geolocation-service.dart';
 import 'package:untitled/services/firebase-notifications-service.dart';
 import 'package:untitled/services/notifications_service.dart';
 import 'package:untitled/test-package/record-cubit.dart';
 import 'package:untitled/ui-screens/login-screen.dart';
+import 'package:untitled/ui-screens/onboarding-screen.dart';
 import 'package:workmanager/workmanager.dart';
 import 'bloc/google-maps-cubit/google-maps-cubit.dart';
 import 'bloc/notifications-bloc/notifications-cubit.dart';
+import 'bloc/user-form-cubit/user_form_cubit.dart';
+import 'bloc/user-form-cubit/user_form_cubit.dart';
 import 'constants/Bloc_Observer.dart';
 import 'constants/app-theme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -92,8 +98,10 @@ void callbackDispatcher() {
 void main()async {
   Bloc.observer = MyBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
+  cameras=await availableCameras();
   await Firebase.initializeApp( );
   await NotificationsService().initNotifications();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
    FirebaseNotificationService().onInit();
    FirebaseMessaging.onBackgroundMessage(_backgroundHandler);
@@ -114,6 +122,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => AuthCubit()..getDeviceToken()),
+          BlocProvider(create: (context) => UserFormCubit()),
           BlocProvider(create: (context) => NetworkCubit()..onInit()),
           BlocProvider(create: (context) => HomeLayoutCubit()),
           BlocProvider(create: (context) => DailyMissionsCubit()..initDailyMissionsCubit()),
@@ -127,7 +136,7 @@ class MyApp extends StatelessWidget {
           child: NeumorphicApp(
               debugShowCheckedModeBanner: false,
               theme: lightTheme,
-              home:const LoginScreen ()),
+              home:const OnBoardingScreen ()),
         ));
   }
 }

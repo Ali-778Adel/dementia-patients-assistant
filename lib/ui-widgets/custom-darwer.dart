@@ -7,6 +7,8 @@ import 'package:untitled/ui-screens/home-screen-demo.dart';
 import 'package:untitled/ui-screens/login-screen.dart';
 
 import '../constants/constants.dart';
+import '../ui-screens/user-form-application.dart';
+import '../ui-screens/user-form-screen.dart';
 
 class CustomDrawer extends StatelessWidget {
  const CustomDrawer({Key? key}) : super(key: key);
@@ -115,7 +117,9 @@ class CustomDrawer extends StatelessWidget {
                         thickness: .1,
                       ),
                       ListTile(
-                        onTap: (){},
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const UserFormScreen()));
+                        },
                         leading:const Icon(
                           Icons.person_outline,
                           color: Colors.white,
